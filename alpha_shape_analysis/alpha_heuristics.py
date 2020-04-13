@@ -7,7 +7,7 @@ from lmfit import Model
 import warnings
 #from multiprocessing import Pool
 
-import alpha_hull
+from alpha_shape_analysis import alpha_hull
 
 # Support functions for graph heuristics
 def network_from_collection(edges, vertices):
