@@ -4,8 +4,10 @@ import warnings
 from scipy.spatial import Delaunay
 #import alpha_shape_analysis
 from alpha_shape_analysis.simplex_property_determination import *
-from alpha_shape_analysis import alpha_hull
-from alpha_shape_analysis import rejection_sampling
+from alpha_shape_analysis.alpha_hull import *
+from alpha_shape_analysis.alpha_heuristics import *
+from alpha_shape_analysis.rejection_sampling import *
+
 print(dir())
 # Overall questions have the saving seperate or internal?
 
