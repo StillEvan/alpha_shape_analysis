@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.spatial import distance
 
 def cayley_menger_analysis(vertices, d = 2):
     """

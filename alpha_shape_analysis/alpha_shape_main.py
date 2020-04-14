@@ -3,9 +3,9 @@ import warnings
 
 from scipy.spatial import Delaunay
 #import alpha_shape_analysis
-from simplex_property_determination import *
-from alpha_hull import *
-from rejection_sampling import *
+from alpha_shape_analysis.simplex_property_determination import *
+from alpha_shape_analysis import alpha_hull
+from alpha_shape_analysis import rejection_sampling
 print(dir())
 # Overall questions have the saving seperate or internal?
 
@@ -41,7 +41,7 @@ def cluster_ionic_abundance(test_coords, test_indices, tri, ion_types):
         
         coords_test = test_coords.loc[test_coords['Ion Label'] == j,['X', 'Y', 'Z']].to_numpy()
             
-        accept_coords, __, accept_boolean = rejection_sampling(tri, alpha_boolean, coords_test)
+        accept_coords, __, accept_boolean = rejection_sampling.rejection_sampling(tri, alpha_boolean, coords_test)
 
         comp_df.loc[i,j] = np.sum(accept_boolean)
     
