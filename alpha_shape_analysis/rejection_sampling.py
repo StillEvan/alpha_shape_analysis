@@ -1,9 +1,4 @@
 import numpy as np
-# Possible rejection_sampling methods which might save time. 2 step knn search then directed walk?
-# Only check ions within x distance? Set X based upon the greater intercluster distance?
-# Doing either of those would require training a nearest neighbor model or doing a distance matrix
-# That could make it slower, but doubt. It might require batch proccessing.
-# If I do one ion type at a time its already in patches. Will need to do a test run. 
 def rejection_sampling(tri, alpha_boolean, test_data):
     # Might be beneficial to have a seperate section for rejection sampling types
     acceptance_boolean = np.zeros(len(test_data), dtype=bool)

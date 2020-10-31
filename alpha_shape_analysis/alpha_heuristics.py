@@ -5,7 +5,6 @@ import networkx as nx
 from scipy.signal import find_peaks
 from lmfit import Model
 import warnings
-#from multiprocessing import Pool
 
 from alpha_shape_analysis import alpha_hull
 
@@ -166,6 +165,15 @@ def double_GLF_heuristic(radii, simplex_measure, tri, d = 2, a_mid = .5, heurist
     
         d_glf_result = d_glf_model.fit(fit_y, x = fit_x, method = opt_method, nan_policy = 'propagate', fit_kws = opt_kws)
     
+    # Use yeval to calculate r2
+    y_pred = double_glf(fit_x, d_glf_result.params['a1'].value, d_glf_result.params['a2'].value, \
+                        d_glf_result.params['a3'].value, d_glf_result.params['c1'].value, \
+                        d_glf_result.params['c2'].value, d_glf_result.params['b1'].value, \
+                        d_glf_result.params['b2'].value, d_glf_result.params['q1'].value, \
+                        d_glf_result.params['q2'].value, d_glf_result.params['v1'].value, \
+                        d_glf_result.params['v2'].value)
+    R2 = 1 - np.sum((fit_y - y_pred)**2)/np.sum((fit_y - np.mean(fit_y))**2)
+    
     if eval_parameters[0] == 'geom': 
         x_eval = np.geomspace(np.min(radii), np.max(radii), num = eval_parameters[1])
     elif eval_parameters[0] == 'linear':
@@ -198,10 +206,6 @@ def double_GLF_heuristic(radii, simplex_measure, tri, d = 2, a_mid = .5, heurist
     maxima, minima = find_extrema(y_slope, threshold = 0)
     inflection, __ = find_peaks(np.abs(np.gradient(np.sign(y_con))))
 
-    #print('Number of peaks ' + str(len(peaks)))
-    #print('Number of minima ' + str(len(minima)))
-    #print('Number of inflection points ' + str(len(inflection)))
-
     single_1 = glf(x_eval, d_glf_result.params['a1'].value, d_glf_result.params['a2'].value, \
                d_glf_result.params['c1'].value, d_glf_result.params['b1'].value, \
                d_glf_result.params['q1'].value, d_glf_result.params['v1'].value)
@@ -227,7 +231,7 @@ def double_GLF_heuristic(radii, simplex_measure, tri, d = 2, a_mid = .5, heurist
     plt.ylabel('% Convex Volume')
     plt.xlabel('Alpha')
     plt.xscale('log')
-    plt.show()
+    
     #d_glf_result.plot()
     plt.title(opt_method)
     plt.axhline(d_glf_result.params['a1'].value)
@@ -365,7 +369,6 @@ def double_GLF_heuristic(radii, simplex_measure, tri, d = 2, a_mid = .5, heurist
                         print(message)
                     optimal_alpha = x_eval[-1] + 1
                 
-    #print(message)
-    return optimal_alpha, d_glf_result, n_inflection, flag, message
+    return optimal_alpha, d_glf_result, R2, n_inflection, flag, message
                 
 
