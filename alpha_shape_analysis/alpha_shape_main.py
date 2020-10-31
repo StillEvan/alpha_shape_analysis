@@ -3,14 +3,10 @@ import warnings
 import pandas as pd
 from scipy.spatial import Delaunay
 
-#import alpha_shape_analysis
 from alpha_shape_analysis.simplex_property_determination import *
 from alpha_shape_analysis.alpha_hull import *
 from alpha_shape_analysis.alpha_heuristics import *
 from alpha_shape_analysis.rejection_sampling import *
-
-print(dir())
-# Overall questions have the saving seperate or internal?
 
 def cluster_alpha_shape_generation(spatial_coords, n_randomizations = 0):
     # spatial_coords should be an nx3 numpy array corresponding to X, Y, Z of a singular clusters ions
@@ -32,8 +28,7 @@ def cluster_alpha_shape_generation(spatial_coords, n_randomizations = 0):
                 warnings.simplefilter('ignore')
                 temp_alpha, temp_d_glf_result, temp_n_inflection, temp_flag, temp_message = double_GLF_heuristic(radii, volume, tri, \
                                                 opt_method = 'ampgo', d = d, a_mid = np.random.sample())
-            
-            #print(temp_d_glf_result.fit_report())
+
             if aic > temp_d_glf_result.aic:
                 print(str(temp_d_glf_result.aic) + ' is lower than prior aic')
                 opt_alpha = temp_alpha
@@ -48,7 +43,6 @@ def cluster_alpha_shape_generation(spatial_coords, n_randomizations = 0):
             warnings.simplefilter('ignore')
             opt_alpha, d_glf_result, n_inflection, flag, message = double_GLF_heuristic(radii, volume, tri, \
                                                 opt_method = 'ampgo', d = d)
-            #print(d_glf_result)
     alpha_boolean = alpha_shape(tri, radii, opt_alpha)
 
     # Insert saving the volume, alpha, glf_fit parameters, mse attributes

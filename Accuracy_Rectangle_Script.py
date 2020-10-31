@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 from scipy.spatial import distance, Delaunay
 import pandas as pd
-import sys
 import warnings
 import time as time
 from alpha_shape_analysis import alpha_hull, alpha_heuristics, simplex_property_determination
