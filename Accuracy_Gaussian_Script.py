@@ -1,4 +1,5 @@
 import numpy as np
+import os
 from sklearn import datasets
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
@@ -16,7 +17,12 @@ cov = [[.1, 0], [0, .1]]
 #random_state = 10
 d = 2
 
-savepath = 'results/accuracy-gaussian.csv'
+directory = 'results'
+filename = 'accuracy-gaussian.csv'
+savepath = directory + filename
+
+if not os.path.isdir(directory):
+    os.makedirs(directory)
 
 n_runs = 100
 kws = dict(totaliter=25, disp=0, eps1=.5, eps2=.0001)
